@@ -47,7 +47,8 @@ class OrganizationResource extends Resource
             ->schema([
                 Fieldset::make('Label')
                     ->schema([
-                        TextInput::make('Nome da Empresa')
+                        TextInput::make('name')
+                            ->label('Nome da Empresa')
                             ->required()
                             ->live(onBlur: true)
                             ->afterStateUpdated(function (Set $set, $state) {
