@@ -1,0 +1,88 @@
+networks:
+  net_multitenant:
+    driver: bridge
+
+services:
+  # custom image
+  multitenant:
+    build:
+      args:
+        user: wallace
+        uid: 1000
+      dockerfile: Dockerfile
+    image: wallacemartinss
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www/
+    restart: unless-stopped
+    depends_on:
+      - redis
+      - queue
+      - mysql
+      - mailhog
+    networks:
+      - net_multitenant
+  
+  #nginx
+  nginx:
+    image: nginx:alpine
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/:/etc/nginx/conf.d/
+    networks:
+      - net_multitenant
+
+  # db
+  mysql:
+    image: mysql:8.0.27
+    restart: always
+    ports:
+      - 3307:3306
+    volumes:
+      - ./.docker/mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      LANG: C.UTF-8
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    networks:
+      - net_multitenant
+
+   # redis
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    networks:
+      - net_multitenant
+
+  # MailHog
+  mailhog:
+    image: mailhog/mailhog:latest
+    logging:
+      driver: 'none'  # disable saving logs
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+
+  # queue
+  queue:
+    build:
+      args:
+        user: wallace
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    command: "php artisan queue:work"
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - redis
+    networks:
+      - net_multitenant
