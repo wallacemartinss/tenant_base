@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('avatar_url')->nullable();
             $table->json('settings')->nullable();
             $table->json('custom_fields')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->boolean('is_admin')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->integer('order_column');

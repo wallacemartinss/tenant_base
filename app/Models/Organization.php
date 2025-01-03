@@ -15,7 +15,10 @@ class Organization extends Model implements HasCurrentTenantLabel
     protected $fillable = [
         'name', 
         'document_number',
-        'slug'
+        'slug',
+        'is_active',
+        'expires_at'
+
     ];
 
     public function getCurrentTenantLabel(): string

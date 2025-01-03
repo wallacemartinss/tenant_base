@@ -14,13 +14,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('organizations', function (Blueprint $table) {
-            $table->id();
+            $table->id()->index();
             $table->string('name');
             $table->string('document_number')->unique();
             $table->string('slug')->unique();
-            $table->boolean('active')->default(true);
+            $table->boolean('is_active')->default(true);
             $table->string('stripe_id')->nullable()->index();
             $table->timestamp('trial_ends_at')->nullable();
+            $table->timestamp('expires_at')->nullable();
             $table->timestamps();
         });
         Schema::create('organization_user', function (Blueprint $table) {
