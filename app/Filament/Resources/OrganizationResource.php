@@ -108,7 +108,7 @@ class OrganizationResource extends Resource
                     ->label('Url Tenant')
                     ->searchable(),
 
-                ToggleColumn::make('active')
+                ToggleColumn::make('is_active')
                     ->alignCenter()
                     ->label('Tenant Ativo'),
 

@@ -36,7 +36,7 @@ class User extends Authenticatable implements HasTenants, Sortable, HasAvatar
      */
     
     protected $fillable = [
-        'id',
+    
         'name',
         'avatar_url',
         'settings',
