@@ -91,14 +91,22 @@ class UserRelationManager extends RelationManager
                 TextColumn::make('email')
                     ->label('E-mail'),
 
-                TextColumn::make('email_verified_at')
-                    ->label('Ativado em')
-                    ->dateTime('d/m/Y HH:mm:ss')
-                    ->sortable(),
-
                 ToggleColumn::make('is_admin')
                     ->alignCenter()
                     ->label('Administrador'),
+
+                TextColumn::make('created_at') 
+                    ->label('Criado em')
+                    ->dateTime('d/m/Y H:m:s')
+                    ->alignCenter()
+                    ->sortable(),
+
+                TextColumn::make('email_verified_at')
+                    ->label('Ativado em')
+                    ->dateTime('d/m/Y H:m:s')
+                    ->alignCenter()
+                    ->sortable(),
+
             ])
             ->filters([
                 //
@@ -113,16 +121,17 @@ class UserRelationManager extends RelationManager
                     EditAction::make(),
                     DeleteAction::make(),
                     Action::make('Resetar Senha')
-                    
+                    ->requiresConfirmation()
                     ->action(function (User $user) {
                         $user->password = Hash::make('password'); // Define a nova senha como 'password'
                         $user->save();
+
                         Notification::make()
                             ->title('Senha Alterada com Sucesso')
+                            ->body('Um Email foi enviado para o usuário com a nova senha')
                             ->success()
                             ->send();
-
-                        
+                      
                     })
                     ->color('warning') // Defina a cor, como amarelo para chamar atenção
                     ->icon('heroicon-o-key'), // Ícone da chave

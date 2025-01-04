@@ -121,12 +121,11 @@ class OrganizationResource extends Resource
                     ->dateTime()
                     ->sortable(),
 
-                TextColumn::make('created_at')
+                TextColumn::make('created_at') 
                     ->label('Criado em')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
+                    ->dateTime('d/m/Y H:m:s')
+                    ->sortable(),
+                         
                 TextColumn::make('updated_at')
                     ->label('Atualizado em')
                     ->dateTime()
