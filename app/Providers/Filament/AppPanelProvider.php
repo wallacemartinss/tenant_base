@@ -39,6 +39,7 @@ class AppPanelProvider extends PanelProvider
         ->sidebarFullyCollapsibleOnDesktop()
         ->registration()
         ->passwordReset()
+        ->breadcrumbs()
         ->databaseNotifications()
         ->profile()
         ->userMenuItems([
