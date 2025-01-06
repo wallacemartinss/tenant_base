@@ -64,11 +64,13 @@ services:
   # MailHog
   mailhog:
     image: mailhog/mailhog:latest
-    logging:
-      driver: 'none'  # disable saving logs
+    tty: true
     ports:
-      - 1025:1025 # smtp server
-      - 8025:8025 # web ui
+      - '1025:1025' # smtp server
+      - '8025:8025' # web ui
+    restart: on-failure  
+    networks:
+      - net_multitenant
 
   # queue
   queue:
