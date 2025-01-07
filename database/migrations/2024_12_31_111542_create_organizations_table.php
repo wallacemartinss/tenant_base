@@ -20,11 +20,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('slug')->unique();
             $table->boolean('is_active')->default(true);
-            $table->string('stripe_id')->nullable()->index();
-            $table->string('pm_type')->nullable();
-            $table->string('pm_last_four', 4)->nullable();
-            $table->timestamp('trial_ends_at')->nullable();
-            $table->timestamp('expires_at')->nullable();
+            $table->string('stripe_customer_id')->nullable()->index();
             $table->timestamps();
         });
         Schema::create('organization_user', function (Blueprint $table) {

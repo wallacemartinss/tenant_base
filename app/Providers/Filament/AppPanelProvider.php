@@ -43,7 +43,6 @@ class AppPanelProvider extends PanelProvider
         ->breadcrumbs()
         ->databaseNotifications()
         ->profile()
-  
         ->userMenuItems([
             'profile' => MenuItem::make()
                 ->label( fn() =>Auth::user()->name)
@@ -97,8 +96,9 @@ class AppPanelProvider extends PanelProvider
 
             ->tenant(Organization::class, ownershipRelationship: 'organization', slugAttribute: 'slug')
             ->tenantRegistration(RegisterOrganization::class)
-            
+            //->requiresTenantSubscription()            
             //->tenantProfile(EditOrganizationProfile::class)
+            
             ->plugins([
                 FilamentEditProfilePlugin::make()
                     ->slug('my-profile')

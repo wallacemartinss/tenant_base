@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Ibge;
 
 use Illuminate\Support\Facades\Http;
 

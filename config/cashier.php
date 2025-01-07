@@ -122,7 +122,18 @@ return [
 
     'logger' => env('CASHIER_LOGGER'),
 
-    
+    'plans' => [
+    'default' => [
+        'product_id' => ENV('CASHIER_STRIPE_SUBSCRIPTION_DEFAULT_PRODUCT_ID'),
+        'price_id' => ENV('CASHIER_STRIPE_SUBSCRIPTION_DEFAULT_PRICE_ID'),
+        'type' => 'default', // Optional, by default it uses the array key as type.
+        'trial_days' => 14, // Optional
+        'has_generic_trial' => true, // Optional, only `trial_days` OR `has_generic_trial` can be used.
+        'allow_promotion_codes' => true, // Optional
+        'collect_tax_ids' => true, // Optional
+        'metered_price' => true, // Optional
+    ],
+],
 
    
 

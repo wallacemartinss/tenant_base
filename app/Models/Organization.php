@@ -11,12 +11,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Organization extends Model implements HasCurrentTenantLabel
 {
-    use HasFactory;
+    use HasFactory, Billable;
 
     protected $fillable = [
-        'name', 
+        'name',
+        'stripe_customer_id',
         'document_number',
         'slug',
+        'phone',
         'is_active',
         'expires_at'
 
@@ -26,14 +28,16 @@ class Organization extends Model implements HasCurrentTenantLabel
     {
         return 'Minha Empresa';
     }
-
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
-
     public function members(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
+    }
+    public function subscription()
+    {
+        return $this->hasOne(Subscription::class);
     }
 }
