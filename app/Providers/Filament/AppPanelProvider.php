@@ -21,6 +21,7 @@ use App\Filament\Pages\Tenancy\RegisterOrganization;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
+use Maartenpaauw\Filament\Cashier\Stripe\BillingProvider;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -42,6 +43,7 @@ class AppPanelProvider extends PanelProvider
         ->breadcrumbs()
         ->databaseNotifications()
         ->profile()
+  
         ->userMenuItems([
             'profile' => MenuItem::make()
                 ->label( fn() =>Auth::user()->name)
@@ -95,6 +97,7 @@ class AppPanelProvider extends PanelProvider
 
             ->tenant(Organization::class, ownershipRelationship: 'organization', slugAttribute: 'slug')
             ->tenantRegistration(RegisterOrganization::class)
+            
             //->tenantProfile(EditOrganizationProfile::class)
             ->plugins([
                 FilamentEditProfilePlugin::make()

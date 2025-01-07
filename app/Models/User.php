@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Filament\Panel;
+use Laravel\Cashier\Billable;
 use Illuminate\Support\Collection;
 use Spatie\EloquentSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +21,7 @@ class User extends Authenticatable implements HasTenants, Sortable, HasAvatar
 
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, SortableTrait;
+    use HasFactory, Notifiable, SortableTrait, Billable;
 
 
 
