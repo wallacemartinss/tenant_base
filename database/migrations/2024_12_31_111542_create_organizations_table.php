@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id()->index();
             $table->string('name');
             $table->string('document_number')->unique();
+            $table->string('phone')->nullable();
             $table->string('slug')->unique();
             $table->boolean('is_active')->default(true);
             $table->string('stripe_id')->nullable()->index();
