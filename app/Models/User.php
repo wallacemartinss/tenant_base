@@ -43,6 +43,7 @@ class User extends Authenticatable implements HasTenants, Sortable, HasAvatar
         'settings',
         'is_admin',
         'email',
+        'phone',
         'password',
         'is_active',
     ];

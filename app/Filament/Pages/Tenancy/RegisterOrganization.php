@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Tenancy\RegisterTenant;
 use Leandrocfe\FilamentPtbrFormFields\Document;
+use Leandrocfe\FilamentPtbrFormFields\PhoneNumber;
+use App\Services\PaymentGateway\Connectors\AsaasConnector;
+use App\Services\PaymentGateway\Gateway;
 
 
 class RegisterOrganization extends RegisterTenant
@@ -32,6 +35,17 @@ class RegisterOrganization extends RegisterTenant
                     ->afterStateUpdated(function (Set $set, $state) {
                         $set('slug', Str::slug($state));
                     }),
+
+                TextInput::make('email')
+                    ->label('E-mail Principal')
+                    ->email()
+                    ->required()
+                    ->unique(ignoreRecord: true),
+
+                PhoneNumber::make('phone')
+                    ->label('Celular da Empresa')
+                    ->required()
+                    ->mask('(99) 99999-9999'),    
                    
                 Document::make('document_number')
                     ->label ('Documento da Empresa (CPF ou CNPJ)') 
@@ -47,8 +61,30 @@ class RegisterOrganization extends RegisterTenant
 
     protected function handleRegistration(array $data): Organization
     {
+       
+
+        $adapter = new AsaasConnector();
+        $gateway = new Gateway($adapter);
+
+        $dataAsaas = [
+            'name' => $this->data['name'],
+            'cpfCnpj' => str_replace(['.', '-', '/'], '',$this->data['document_number']),
+            'email' => $this->data['email'],
+            'company' => $this->data['name'],
+            'mobilePhone' => str_replace(['.', '-', '/'], '',$this->data['phone']),
+        ];
+
+        //dd($data);
+
+        $customer = $gateway->customer()->create($dataAsaas);
+       
         $organization = Organization::create($data);
-        $organization->members()->attach(Auth::user());
+        $organization->members()->attach(Auth::user());  
+
+        $organization->asaas_customer_id = $customer['id'];
+        $organization->save();
+
         return $organization;
     }
+
 }

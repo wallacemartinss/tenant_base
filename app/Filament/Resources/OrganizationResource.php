@@ -69,8 +69,9 @@ class OrganizationResource extends Resource
 
                 Fieldset::make('Dados de Validade')
                     ->schema([
-                        TextInput::make('stripe_id')
-                            ->label('Identificador Stripe')
+                        TextInput::make('asaas_customer_id')
+                            ->label('Id Gateway Pagamento')
+                            ->readOnly()
                             ->maxLength(255),
 
                         DateTimePicker::make('trial_ends_at')
@@ -112,8 +113,8 @@ class OrganizationResource extends Resource
                     ->alignCenter()
                     ->label('Tenant Ativo'),
 
-                TextColumn::make('stripe_id')
-                    ->label('Identificador Stripe')
+                TextColumn::make('asaas_customer_id')
+                    ->label('Id Gateway Pagamento')
                     ->searchable(),
 
                 TextColumn::make('trial_ends_at')

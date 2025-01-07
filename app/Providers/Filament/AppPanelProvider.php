@@ -12,6 +12,7 @@ use Filament\Navigation\MenuItem;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
 use Illuminate\Support\Facades\Auth;
+use App\Filament\Pages\Auth\Register;
 use App\Http\Middleware\FilamentSettings;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
@@ -38,7 +39,7 @@ class AppPanelProvider extends PanelProvider
         ->path('app')
         ->login()
         ->sidebarFullyCollapsibleOnDesktop()
-        ->registration()
+        ->registration(Register::class)
         ->passwordReset()
         ->breadcrumbs()
         ->databaseNotifications()

@@ -15,8 +15,9 @@ class Organization extends Model implements HasCurrentTenantLabel
 
     protected $fillable = [
         'name',
-        'stripe_customer_id',
+        'asaas_customer_id',
         'document_number',
+        'email',
         'slug',
         'phone',
         'is_active',

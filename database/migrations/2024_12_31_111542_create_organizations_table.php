@@ -17,10 +17,11 @@ return new class extends Migration
             $table->id()->index();
             $table->string('name');
             $table->string('document_number')->unique();
+            $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->string('slug')->unique();
             $table->boolean('is_active')->default(true);
-            $table->string('stripe_customer_id')->nullable()->index();
+            $table->string('asaas_customer_id')->nullable()->index();
             $table->timestamps();
         });
         Schema::create('organization_user', function (Blueprint $table) {
