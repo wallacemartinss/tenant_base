@@ -24,5 +24,10 @@ class Subscription extends Model
     {
         return $this->belongsTo(Organization::class);
     }
-}
 
+    public function hasActiveSubscription(): bool
+    {
+        $subscription = $this->subscription; // Relacionamento com a tabela `subscription`
+        return $subscription && $subscription->status === 'active';
+    }
+}

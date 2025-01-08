@@ -21,7 +21,7 @@ class User extends Authenticatable implements HasTenants, Sortable, HasAvatar
 
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, SortableTrait, Billable;
+    use HasFactory, Notifiable, SortableTrait;
 
 
 

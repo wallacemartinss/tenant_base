@@ -11,7 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Organization extends Model implements HasCurrentTenantLabel
 {
-    use HasFactory, Billable;
+    use HasFactory;
+    use Billable;
 
     protected $fillable = [
         'name',

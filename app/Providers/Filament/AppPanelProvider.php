@@ -20,14 +20,16 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
 use App\Filament\Pages\Tenancy\RegisterOrganization;
 use Illuminate\Routing\Middleware\SubstituteBindings;
+use App\Http\Middleware\CheckOrganizationSubscription;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
-use Maartenpaauw\Filament\Cashier\Stripe\BillingProvider;
+
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use App\Filament\Billing\BillingProvider;
 
 class AppPanelProvider extends PanelProvider
 {
@@ -90,6 +92,7 @@ class AppPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
                 FilamentSettings::class,
+                //CheckOrganizationSubscription::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
@@ -97,8 +100,8 @@ class AppPanelProvider extends PanelProvider
 
             ->tenant(Organization::class, ownershipRelationship: 'organization', slugAttribute: 'slug')
             ->tenantRegistration(RegisterOrganization::class)
-            //->requiresTenantSubscription()            
-            //->tenantProfile(EditOrganizationProfile::class)
+            //->tenantBillingProvider(new BillingProvider())
+            //->requiresTenantSubscription()
             
             ->plugins([
                 FilamentEditProfilePlugin::make()
